@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    *{
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    .main{
+      background-color: #eee;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      margin: 50px auto;
+      width: 500px;
+      padding: 40px;
+      border-radius: 10px;
+    }
+    input{
+      border: none;
+      height: 40px;
+      width: 250px;
+      border-radius: 5px;
+      font-size: 21px;
+      padding: 0 5px;
+    }
+    button{
+      background-color: orangered;
+      color: #fff;
+      border: none;
+      outline: none;
+      padding: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .task button{
+      background-color: red;
+      padding: 6px;
+    }
+    .container{
+      background-color: #eee;
+      width: 500px;
+      padding: 40px;
+      border-radius: 10px;
+      margin: auto;
+      height: 424px;
+      overflow: auto;
+    }
+    .task{
+      background-color: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 30px;
+      border-radius: 5px;
+      margin-bottom: 40px;
+      font-size: 19px;
+    }
+    .task:last-of-type{
+      margin-bottom: 0;
+    }
+  </style>
+</head>
+<body>
+  <section>
+    <div class="main">
+      <input type="text" name="task">
+      <button>Add Task</button>
+    </div>
+    <div class="container"></div>
+  </section>
+  
+  <script>
+    let inp = document.querySelector('input');
+    let add = document.querySelector('.main button');
+    let container = document.querySelector('.container');
+    let arr = JSON.parse(localStorage.getItem("tasks") || "[]");
+    
+    arr.forEach(e => {
+      let task = document.createElement('div');
+      let p = document.createElement('p');
+      let btn = document.createElement('button');
+      task.className = 'task';
+      p.append(e['title']);
+      btn.append('delete');
+      task.appendChild(p);
+      task.appendChild(btn);
+      container.appendChild(task);
+    });
+
+    let btns = document.querySelectorAll('.container .task button');
+    btns.forEach(function(e){
+      e.addEventListener('click', function(e){
+        arr = arr.filter(e=>{
+          return e['title'] != this.previousElementSibling.textContent;
+        });
+        window.localStorage.setItem('tasks', JSON.stringify(arr));
+        this.parentElement.remove();
+      });
+    });
+
+    add.addEventListener('click', e => {
+      arr.push({
+        id: '1812',
+        title: inp.value,
+      });
+      window.localStorage.setItem('tasks', JSON.stringify(arr));
+
+      let task = document.createElement('div');
+      let p = document.createElement('p');
+      let btn = document.createElement('button');
+      task.className = 'task';
+      p.append(arr[arr.length-1]['title']);
+      btn.append('delete');
+      task.appendChild(p);
+      task.appendChild(btn);
+      container.appendChild(task);
+      btn.addEventListener('click', function(e){
+        arr = arr.filter(e=>{
+          return e['title'] != this.previousElementSibling.textContent;
+        });
+        window.localStorage.setItem('tasks', JSON.stringify(arr));
+        this.parentElement.remove();
+      });
+    });
+  </script>
+</body>
+</html>
