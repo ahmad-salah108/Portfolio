@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body{
+      background-color: teal;
+    }
+    svg{
+      display: block;
+      margin: 100px auto;
+    }
+    .mode-tog{
+      cursor: pointer;
+      background: 0;
+      border: 0;
+      opacity: 0.8;
+      padding: 1em;
+      border-radius: 50%;
+      position: relative;
+    }
+    .mode-tog:hover,
+    .mode-tog:focus-visible{
+      background-color: rgba(0, 0, 0, 0.15);
+      opacity: 1;
+    }
+    .mode-tog::after{
+      content: attr(aria-label);
+      position: absolute;
+      
+    }
+  </style>
+</head>
+<body>
+  <svg class="mode-tog" width="100px" aria-label="switch to dark theme" viewBox="0 0 359.8 359.8" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
+    <g transform="matrix(1, 0, 0, 1, -63.041421, -52.10455)">
+      <path d="M 114.49 105.493 H 368.911 V 359.914 H 114.49 V 105.493 Z M 157.306 148.309 V 317.098 H 326.095 V 148.309 H 157.306 Z" style="paint-order: fill; stroke: rgba(231, 44, 44, 0); fill: rgb(0, 0, 0);" bx:shape="frame 114.49 105.493 254.421 254.421 42.816 42.816 0 0 0 0 1@02f92db5"/>
+      <path d="M 243.872 231.772 m -120.074 0 a 120.074 120.074 0 1 0 240.148 0 a 120.074 120.074 0 1 0 -240.148 0 Z M 243.872 231.772 m -80.733 0 a 80.733 80.733 0 0 1 161.466 0 a 80.733 80.733 0 0 1 -161.466 0 Z" style="fill-rule: nonzero; paint-order: fill; stroke: rgba(231, 44, 44, 0); fill: rgb(0, 0, 0);" bx:shape="ring 243.872 231.772 80.733 80.733 120.074 120.074 1@77cac05a"/>
+      <path d="M 228.669 164.366 H 483.09 V 418.787 H 228.669 V 164.366 Z M 269.576 205.273 V 377.88 H 442.183 V 205.273 H 269.576 Z" style="paint-order: fill; stroke: rgba(231, 44, 44, 0); fill: rgb(0, 0, 0);" transform="matrix(0.71934, 0.694658, -0.694658, 0.71934, 189.489029, -224.952621)" bx:shape="frame 228.669 164.366 254.421 254.421 40.907 40.907 0 0 0 0 1@bb5429f5"/>
+    </g>
+    <circle style="stroke: rgba(0, 0, 0, 0); fill: rgb(0, 0, 0);" cx="180.831" cy="180.288" r="68.57"/>
+  </svg>
+</body>
+</html>
