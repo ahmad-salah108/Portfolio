@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+HK:wght@400;600&display=swap');
 :root
 {
     --main-color:#a800a8;
@@ -22,7 +22,7 @@ html
 }
 body
 {
-    font-family: 'Roboto Slab', serif;
+    font-family: 'Noto Serif HK', serif;
     font-size: 16px;
     letter-spacing: 1px;
     font-weight: normal;
@@ -325,7 +325,7 @@ img
 }
 .home-section .home-text h2
 {
-    font-size: 60px;
+    font-size: 58px;
     font-weight: 700;
     color: var(--white);
     line-height: 60px;
