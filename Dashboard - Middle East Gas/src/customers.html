@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>الزبائن</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../css/all.min.css" />
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../css/bootstrap.rtl.min.css" />
+    <!-- Google Fonts Cairo -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400&display=swap"
+      rel="stylesheet"
+    />
+    <!-- DATATABLES -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"
+    />
+    <!-- Custom styles -->
+    <link rel="stylesheet" href="../css/tables-style.min.css" />
+    <link rel="stylesheet" href="../css/customers.min.css" />
+  </head>
+  <body>
+    <div class="loading-screen">
+      <div class="spinner-border text-primary" style="width: 3rem; height: 3rem; color: var(--main-color) !important;" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+    <h1 class="heading">الزبائن</h1>
+    <div class="section-style sticky-nav flex-nav">
+      <div class="search-container">
+        <label for="search">بحث:</label>
+        <input type="text" class="form-control search-width" name="search" id="search">
+        <button type="button" class="btn btn-add" data-bs-toggle="modal" data-bs-target="#addModal">
+          + إضافة زبون جديد
+        </button>
+      </div>
+      <div class="customers-nav">
+        <a class="sticky-nav-btn" href="#normal-customer">زبون عادي</a>
+        <a class="sticky-nav-btn" href="#driver-customer">زبون سائق</a>
+        <a class="sticky-nav-btn" href="#store-customer">زبون محل</a>
+      </div>
+    </div>
+    <!-- ADD MODAL -->
+    <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">إضافة زبون جديد</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="container-fluid">
+              <form id="add-customer" class="row">
+                <div class="col-md-12">
+                  <label class="form-label">اختر نوع الزبون</label>
+                  <select id="customer-type" name="customer-type" class="form-select" aria-label="Default select example">
+                    <option value="normal-customer">زبون عادي</option>
+                    <option value="driver-customer">زبون سائق</option>
+                    <option value="store-customer">زبون محل</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label for="customer-name" class="form-label">اسم الزبون</label>
+                  <input type="text" class="form-control" id="customer-name" name="customer-name" />
+                </div>
+                <div class="col-md-6">
+                  <label for="customer-id" class="form-label">رقم الهوية</label>
+                  <input type="number" class="form-control" id="customer-id" name="customer-id" />
+                </div>
+                <div class="col-md-12">
+                  <label for="tube-id" class="form-label">رقم الانبوبة</label>
+                  <input type="text" class="form-control" id="tube-id" name="tube-id" />
+                </div>
+                <div class="col-md-12 driver-option" style="display: none;">
+                  <label for="driver-id" class="form-label">رقم الرخصة</label>
+                  <input type="text" class="form-control" id="driver-id" name="driver-id" />
+                </div>
+                <div class="col-md-6 store-option" style="display: none;">
+                  <label for="store-type" class="form-label">نوع المحل</label>
+                  <input type="text" class="form-control" id="store-type" name="store-type" />
+                </div>
+                <div class="col-md-6 store-option" style="display: none;">
+                  <label for="store-name" class="form-label">اسم المحل</label>
+                  <input type="text" class="form-control" id="store-name" name="store-name" />
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
+            <button type="button" class="btn btn-primary">إضافة</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- DELETE MODAL -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            هل تريد حذف الصف؟
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">لا</button>
+            <button type="button" class="btn btn-primary">نعم</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- EDIT MODAL NORMAL -->
+    <div class="modal fade" id="editModalNormal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">تعديل زبون عادي</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="container-fluid">
+              <form id="edit-normal-customer" class="row">
+                <div class="col-md-6">
+                  <label for="normal-customer-name" class="form-label">اسم الزبون</label>
+                  <input type="text" class="form-control" id="normal-customer-name" name="normal-customer-name" />
+                </div>
+                <div class="col-md-6">
+                  <label for="normal-customer-id" class="form-label">رقم الهوية</label>
+                  <input type="number" class="form-control" id="normal-customer-id" name="normal-customer-id" />
+                </div>
+                <div class="col-md-12">
+                  <label for="normal-tube-id" class="form-label">رقم الانبوبة</label>
+                  <input type="text" class="form-control" id="normal-tube-id" name="normal-tube-id" />
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
+            <button type="button" class="btn btn-primary">تعديل</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- EDIT MODAL DRIVER -->
+    <div class="modal fade" id="editModalDriver" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">تعديل زبون سائق</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="container-fluid">
+              <form id="edit-driver-customer" class="row">
+                <div class="col-md-6">
+                  <label for="driver-customer-name" class="form-label">اسم الزبون</label>
+                  <input type="text" class="form-control" id="driver-customer-name" name="driver-customer-name" />
+                </div>
+                <div class="col-md-6">
+                  <label for="driver-customer-id" class="form-label">رقم الهوية</label>
+                  <input type="number" class="form-control" id="driver-customer-id" name="driver-customer-id" />
+                </div>
+                <div class="col-md-12">
+                  <label for="driver-tube-id" class="form-label">رقم الانبوبة</label>
+                  <input type="text" class="form-control" id="driver-tube-id" name="driver-tube-id" />
+                </div>
+                <div class="col-md-12">
+                  <label for="driver-driver-id" class="form-label">رقم الرخصة</label>
+                  <input type="text" class="form-control" id="driver-driver-id" name="driver-driver-id" />
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
+            <button type="button" class="btn btn-primary">تعديل</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- EDIT MODAL STORE -->
+    <div class="modal fade" id="editModalStore" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">تعديل زبون محل</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="container-fluid">
+              <form id="edit-store-customer" class="row">
+                <div class="col-md-6">
+                  <label for="store-customer-name" class="form-label">اسم الزبون</label>
+                  <input type="text" class="form-control" id="store-customer-name" name="store-customer-name" />
+                </div>
+                <div class="col-md-6">
+                  <label for="store-customer-id" class="form-label">رقم الهوية</label>
+                  <input type="number" class="form-control" id="store-customer-id" name="store-customer-id" />
+                </div>
+                <div class="col-md-12">
+                  <label for="store-tube-id" class="form-label">رقم الانبوبة</label>
+                  <input type="text" class="form-control" id="store-tube-id" name="store-tube-id" />
+                </div>
+                <div class="col-md-6">
+                  <label for="store-store-type" class="form-label">نوع المحل</label>
+                  <input type="text" class="form-control" id="store-store-type" name="store-store-type" />
+                </div>
+                <div class="col-md-6">
+                  <label for="store-store-name" class="form-label">اسم المحل</label>
+                  <input type="text" class="form-control" id="store-store-name" name="store-store-name" />
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
+            <button type="button" class="btn btn-primary">تعديل</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="normal-customer" class="table-container normal-customer section-style">
+      <h3 class="h3-heading">زبون عادي</h3>
+      <table class="table table-striped normalCus">
+        <thead>
+          <tr>
+            <th scope="col">الرقم</th>
+            <th scope="col">اسم الزبون</th>
+            <th scope="col">رقم الهوية</th>
+            <th scope="col">رقم الانبوبة</th>
+            <th scope="col">تعديل</th>
+            <th scope="col">حذف</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td scope="row">1</td>
+            <td>محمد صالح</td>
+            <td>408960794</td>
+            <td>122</td>
+            <td>
+              <button
+                type="button"
+                class="btn btn-edit btn-sm"
+                data-bs-toggle="modal"
+                data-bs-target="#editModalNormal"
+              >
+                <i class="fa-solid fa-pen-to-square fa-lg"></i>
+              </button>
+            </td>
+            <td>
+              <button
+                type="button"
+                class="btn btn-delete btn-sm"
+                data-bs-toggle="modal"
+                data-bs-target="#deleteModal"
+              >
+                <i class="fa-solid fa-trash-can fa-lg"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div id="driver-customer" class="table-container driver-customer section-style">
+      <h3 class="h3-heading">زبون سائق</h3>
+      <table class="table table-striped driverCus">
+        <thead>
+          <tr>
+            <th scope="col">الرقم</th>
+            <th scope="col">اسم الزبون</th>
+            <th scope="col">رقم الهوية</th>
+            <th scope="col">رقم الانبوبة</th>
+            <th scope="col">رقم الرخصة</th>
+            <th scope="col">تعديل</th>
+            <th scope="col">حذف</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td scope="row">1</td>
+            <td>Mark</td>
+            <td>ممتلئة</td>
+            <td>12كغم</td>
+            <td>60</td>
+            <td>
+              <button
+                type="button"
+                class="btn btn-edit btn-sm"
+                data-bs-toggle="modal"
+                data-bs-target="#editModalDriver"
+              >
+                <i class="fa-solid fa-pen-to-square fa-lg"></i>
+              </button>
+            </td>
+            <td>
+              <button
+                type="button"
+                class="btn btn-delete btn-sm"
+                data-bs-toggle="modal"
+                data-bs-target="#deleteModal"
+              >
+                <i class="fa-solid fa-trash-can fa-lg"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div id="store-customer" class="table-container store-customer section-style">
+      <h3 class="h3-heading">زبون محل</h3>
+      <table class="table table-striped storeCus">
+        <thead>
+          <tr>
+            <th scope="col">الرقم</th>
+            <th scope="col">اسم الزبون</th>
+            <th scope="col">رقم الهوية</th>
+            <th scope="col">رقم الانبوبة</th>
+            <th scope="col">نوع المحل</th>
+            <th scope="col">اسم المحل</th>
+            <th scope="col">تعديل</th>
+            <th scope="col">حذف</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td scope="row">1</td>
+            <td>Mark</td>
+            <td>ممتلئة</td>
+            <td>12كغم</td>
+            <td>60</td>
+            <td>60</td>
+            <td>
+              <button
+                type="button"
+                class="btn btn-edit btn-sm"
+                data-bs-toggle="modal"
+                data-bs-target="#editModalStore"
+              >
+                <i class="fa-solid fa-pen-to-square fa-lg"></i>
+              </button>
+            </td>
+            <td>
+              <button
+                type="button"
+                class="btn btn-delete btn-sm"
+                data-bs-toggle="modal"
+                data-bs-target="#deleteModal"
+              >
+                <i class="fa-solid fa-trash-can fa-lg"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    </div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script src="../js/jquery.dataTables.min.js"></script>
+    <script src="../js/bootstrap.bundle.min.js"></script>
+    <script src="../js/all.min.js"></script>
+    <script src="../js/customers-script.min.js"></script>
+  </body>
+</html>
